@@ -55,7 +55,7 @@ class Nmap
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(ProcessExecutor $executor = null, $outputFile = null, $executable = 'nmap')
+    public function __construct(ProcessExecutor $executor = null, $outputFile = null, $executable = 'sudo nmap')
     {
         $this->executor   = $executor ?: new ProcessExecutor();
         $this->outputFile = $outputFile ?: sys_get_temp_dir() . '/output.xml';
