@@ -19,30 +19,60 @@ use Symfony\Component\Process\ProcessUtils;
  */
 class Nmap
 {
+    /**
+     * @var \Nmap\Util\ProcessExecutor
+     */
     private $executor;
 
+    /**
+     * @var string
+     */
     private $outputFile;
 
+    /**
+     * @var bool
+     */
     private $enableOsDetection = false;
 
+    /**
+     * @var bool
+     */
     private $enableServiceInfo = false;
 
+    /**
+     * @var bool
+     */
     private $enableVerbose     = false;
 
+    /**
+     * @var bool
+     */
     private $disablePortScan   = false;
 
+    /**
+     * @var bool
+     */
     private $disableReverseDNS = false;
 
+    /**
+     * @var bool
+     */
     private $treatHostsAsOnline = false;
 
+    /**
+     * @var null|string
+     */
     private $executable;
 
+    /**
+     * @var int
+     */
     private $timeout = 60;
 
     /**
      * @return Nmap
      */
-    public static function create()
+    public static function create() : self
     {
         return new static();
     }
@@ -55,7 +85,7 @@ class Nmap
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(ProcessExecutor $executor = null, $outputFile = null, $executable = 'sudo nmap')
+    public function __construct(?ProcessExecutor $executor = null, ?string $outputFile = null, ?string $executable = 'sudo nmap')
     {
         $this->executor   = $executor ?: new ProcessExecutor();
         $this->outputFile = $outputFile ?: sys_get_temp_dir() . '/output.xml';
@@ -73,7 +103,7 @@ class Nmap
      *
      * @return Host[]
      */
-    public function scan(array $targets, array $ports = array())
+    public function scan(array $targets, array $ports = []) : array
     {
         $targets = implode(' ', array_map(function ($target) {
             return ProcessUtils::escapeArgument($target);
@@ -128,7 +158,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function enableOsDetection($enable = true)
+    public function enableOsDetection(bool $enable = true) : self
     {
         $this->enableOsDetection = $enable;
 
@@ -140,7 +170,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function enableServiceInfo($enable = true)
+    public function enableServiceInfo(bool $enable = true) : self
     {
         $this->enableServiceInfo = $enable;
 
@@ -152,7 +182,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function enableVerbose($enable = true)
+    public function enableVerbose(bool $enable = true) : self
     {
         $this->enableVerbose = $enable;
 
@@ -164,7 +194,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function disablePortScan($disable = true)
+    public function disablePortScan(bool $disable = true) : self
     {
         $this->disablePortScan = $disable;
 
@@ -176,7 +206,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function disableReverseDNS($disable = true)
+    public function disableReverseDNS(bool $disable = true) : self
     {
         $this->disableReverseDNS = $disable;
 
@@ -188,7 +218,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function treatHostsAsOnline($disable = true)
+    public function treatHostsAsOnline(bool $disable = true) : self
     {
         $this->treatHostsAsOnline = $disable;
 
@@ -200,14 +230,19 @@ class Nmap
      *
      * @return Nmap
      */
-    public function setTimeout($timeout)
+    public function setTimeout(int $timeout) : self
     {
         $this->timeout = $timeout;
 
         return $this;
     }
 
-    private function parseOutputFile($xmlFile)
+    /**
+     * @param $xmlFile
+     *
+     * @return array
+     */
+    private function parseOutputFile($xmlFile) : array
     {
         $xml = simplexml_load_file($xmlFile);
 
@@ -224,7 +259,12 @@ class Nmap
         return $hosts;
     }
 
-    private function parseHostnames(\SimpleXMLElement $xmlHostnames)
+    /**
+     * @param \SimpleXMLElement $xmlHostnames
+     *
+     * @return array
+     */
+    private function parseHostnames(\SimpleXMLElement $xmlHostnames) : array
     {
         $hostnames = array();
         foreach ($xmlHostnames as $hostname) {
@@ -237,7 +277,12 @@ class Nmap
         return $hostnames;
     }
 
-    private function parsePorts(\SimpleXMLElement $xmlPorts)
+    /**
+     * @param \SimpleXMLElement $xmlPorts
+     *
+     * @return array
+     */
+    private function parsePorts(\SimpleXMLElement $xmlPorts) : array
     {
         $ports = array();
         foreach ($xmlPorts as $port) {
@@ -256,7 +301,12 @@ class Nmap
         return $ports;
     }
 
-    private function parseAddresses(\SimpleXMLElement $host)
+    /**
+     * @param \SimpleXMLElement $host
+     *
+     * @return array
+     */
+    private function parseAddresses(\SimpleXMLElement $host) : array
     {
         $addresses = array();
         foreach ($host->xpath('./address') as $address) {

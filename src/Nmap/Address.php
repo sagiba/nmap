@@ -12,17 +12,19 @@ namespace Nmap;
 
 /**
  * @author Dany Maillard <danymaillard93b@gmail.com>
+ *         Jens Reinemuth <jens@reinemuth.rocks>
+ *
  */
 class Address
 {
-    CONST TYPE_IPV4 = 'ipv4';
-    CONST TYPE_MAC = 'mac';
+    public const TYPE_IPV4 = 'ipv4';
+    public const TYPE_MAC = 'mac';
 
     private $address;
     private $type;
     private $vendor;
 
-    public function __construct($address, $type = self::TYPE_IPV4, $vendor = '')
+    public function __construct(string $address, string $type = self::TYPE_IPV4, string $vendor = '')
     {
         $this->address = $address;
         $this->type = $type;
@@ -32,7 +34,7 @@ class Address
     /**
      * @return string
      */
-    public function getAddress()
+    public function getAddress() : string
     {
         return $this->address;
     }
@@ -40,7 +42,7 @@ class Address
     /**
      * @return string
      */
-    public function getType()
+    public function getType() : string
     {
         return $this->type;
     }
@@ -48,7 +50,7 @@ class Address
     /**
      * @return string
      */
-    public function getVendor()
+    public function getVendor() : string
     {
         return $this->vendor;
     }

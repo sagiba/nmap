@@ -13,20 +13,51 @@ namespace Nmap;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
+/**
+ * Class Port
+ *
+ * @package Nmap
+ */
 class Port
 {
-    const STATE_OPEN   = 'open';
+    /**
+     *
+     */
+    public const STATE_OPEN   = 'open';
 
-    const STATE_CLOSED = 'closed';
+    /**
+     *
+     */
+    public const STATE_CLOSED = 'closed';
 
+    /**
+     * @var int
+     */
     private $number;
 
+    /**
+     * @var
+     */
     private $protocol;
 
+    /**
+     * @var
+     */
     private $state;
 
+    /**
+     * @var \Nmap\Service
+     */
     private $service;
 
+    /**
+     * Port constructor.
+     *
+     * @param               $number
+     * @param               $protocol
+     * @param               $state
+     * @param \Nmap\Service $service
+     */
     public function __construct($number, $protocol, $state, Service $service)
     {
         $this->number   = (int) $number;
@@ -38,7 +69,7 @@ class Port
     /**
      * @return integer
      */
-    public function getNumber()
+    public function getNumber() : int
     {
         return $this->number;
     }
@@ -46,7 +77,7 @@ class Port
     /**
      * @return string
      */
-    public function getProtocol()
+    public function getProtocol() : string
     {
         return $this->protocol;
     }
@@ -54,7 +85,7 @@ class Port
     /**
      * @return string
      */
-    public function getState()
+    public function getState() : string
     {
         return $this->state;
     }
@@ -62,7 +93,7 @@ class Port
     /**
      * @return boolean
      */
-    public function isOpen()
+    public function isOpen() : bool
     {
         return self::STATE_OPEN === $this->state;
     }
@@ -70,7 +101,7 @@ class Port
     /**
      * @return boolean
      */
-    public function isClosed()
+    public function isClosed() : bool
     {
         return self::STATE_CLOSED === $this->state;
     }
@@ -78,7 +109,7 @@ class Port
     /**
      * @return Service
      */
-    public function getService()
+    public function getService() : Service
     {
         return $this->service;
     }

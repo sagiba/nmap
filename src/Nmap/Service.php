@@ -13,14 +13,35 @@ namespace Nmap;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
+/**
+ * Class Service
+ *
+ * @package Nmap
+ */
 class Service
 {
+    /**
+     * @var
+     */
     private $name;
 
+    /**
+     * @var
+     */
     private $product;
 
+    /**
+     * @var
+     */
     private $version;
 
+    /**
+     * Service constructor.
+     *
+     * @param $name
+     * @param $product
+     * @param $version
+     */
     public function __construct($name, $product, $version)
     {
         $this->name = $name;
@@ -28,17 +49,26 @@ class Service
         $this->version = $version;
     }
 
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getName() : string
     {
         return $this->name;
     }
 
-    public function getProduct()
+    /**
+     * @return string
+     */
+    public function getProduct() : string
     {
         return $this->product;
     }
 
-    public function getVersion()
+    /**
+     * @return string
+     */
+    public function getVersion() : string
     {
         return $this->version;
     }
