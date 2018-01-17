@@ -37,6 +37,15 @@ class Nmap
     /**
      * @var bool
      */
+    private $enableTCPScan = true;
+    /**
+     * @var bool
+     */
+    private $enableUDPScan = true;
+
+    /**
+     * @var bool
+     */
     private $enableServiceInfo = false;
 
     /**
@@ -118,6 +127,14 @@ class Nmap
             $options[] = '-sV';
         }
 
+        if (true === $this->enableTCPScan) {
+            $options[] = '-sT';
+        }
+
+        if (true === $this->enableUDPScan) {
+            $options[] = '-sU';
+        }
+
         if (true === $this->enableVerbose) {
             $options[] = '-v';
         }
@@ -135,6 +152,8 @@ class Nmap
         if (true == $this->treatHostsAsOnline) {
             $options[] = '-Pn';
         }
+
+
 
         $options[] = '-oX';
         $command   = sprintf('%s %s %s %s',
@@ -234,6 +253,26 @@ class Nmap
     {
         $this->timeout = $timeout;
 
+        return $this;
+    }
+
+    /**
+     * @param bool $enable
+     *
+     * @return \Nmap\Nmap
+     */
+    public function enableTCPScan(bool $enable = true) : self {
+        $this->enableTCPScan = $enable;
+        return $this;
+    }
+
+    /**
+     * @param bool $enable
+     *
+     * @return \Nmap\Nmap
+     */
+    public function enableUDPScan(bool $enable = true) : self {
+        $this->enableUDPScan = $enable;
         return $this;
     }
 
