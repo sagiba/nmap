@@ -13,6 +13,10 @@ namespace Nmap;
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
+/**
+ * Class Host
+ * @package Nmap
+ */
 class Host
 {
     /**

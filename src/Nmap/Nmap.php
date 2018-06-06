@@ -81,7 +81,7 @@ class Nmap
     /**
      * @return Nmap
      */
-    public static function create() : self
+    public static function create() : Nmap
     {
         return new static();
     }
@@ -177,7 +177,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function enableOsDetection(bool $enable = true) : self
+    public function enableOsDetection(bool $enable = true) : Nmap
     {
         $this->enableOsDetection = $enable;
 
@@ -189,7 +189,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function enableServiceInfo(bool $enable = true) : self
+    public function enableServiceInfo(bool $enable = true) : Nmap
     {
         $this->enableServiceInfo = $enable;
 
@@ -201,7 +201,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function enableVerbose(bool $enable = true) : self
+    public function enableVerbose(bool $enable = true) : Nmap
     {
         $this->enableVerbose = $enable;
 
@@ -213,7 +213,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function disablePortScan(bool $disable = true) : self
+    public function disablePortScan(bool $disable = true) : Nmap
     {
         $this->disablePortScan = $disable;
 
@@ -225,7 +225,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function disableReverseDNS(bool $disable = true) : self
+    public function disableReverseDNS(bool $disable = true) : Nmap
     {
         $this->disableReverseDNS = $disable;
 
@@ -237,7 +237,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function treatHostsAsOnline(bool $disable = true) : self
+    public function treatHostsAsOnline(bool $disable = true) : Nmap
     {
         $this->treatHostsAsOnline = $disable;
 
@@ -249,7 +249,7 @@ class Nmap
      *
      * @return Nmap
      */
-    public function setTimeout(int $timeout) : self
+    public function setTimeout(int $timeout) : Nmap
     {
         $this->timeout = $timeout;
 
@@ -261,7 +261,7 @@ class Nmap
      *
      * @return \Nmap\Nmap
      */
-    public function enableTCPScan(bool $enable = true) : self {
+    public function enableTCPScan(bool $enable = true) : Nmap {
         $this->enableTCPScan = $enable;
         return $this;
     }
@@ -271,7 +271,7 @@ class Nmap
      *
      * @return \Nmap\Nmap
      */
-    public function enableUDPScan(bool $enable = true) : self {
+    public function enableUDPScan(bool $enable = true) : Nmap {
         $this->enableUDPScan = $enable;
         return $this;
     }
@@ -281,7 +281,7 @@ class Nmap
      *
      * @return array
      */
-    private function parseOutputFile($xmlFile) : array
+    private function parseOutputFile(string $xmlFile) : array
     {
         $xml = simplexml_load_file($xmlFile);
 
