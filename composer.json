@@ -20,7 +20,7 @@
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
-        "psr-4": { "openWebX\\Nmap\\": "src/Nmap" }
+        "psr-0": { "Nmap": "src/Nmap" }
     },
     "config": {
         "bin-dir": "bin"
