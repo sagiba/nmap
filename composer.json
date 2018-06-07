@@ -20,7 +20,7 @@
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
-        "psr-0": { "Nmap": "src/Nmap" }
+        "psr-0": { "Nmap": "src" }
     },
     "config": {
         "bin-dir": "bin"
