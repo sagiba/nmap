@@ -115,7 +115,7 @@ class Nmap
     public function scan(array $targets, array $ports = []) : array
     {
         $targets = implode(' ', array_map(function ($target) {
-            return ProcessUtils::escapeArgument($target);
+            return $target;
         }, $targets));
 
         $options = array();
