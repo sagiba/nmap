@@ -115,7 +115,7 @@ class Nmap
     public function scan(array $targets, array $ports = []) : array
     {
         $targets = implode(' ', array_map(function ($target) {
-            return $target;
+            return ProcessUtils::validateInput(self::class, $target);
         }, $targets));
 
         $options = array();
@@ -159,7 +159,7 @@ class Nmap
         $command   = sprintf('%s %s %s %s',
             $this->executable,
             implode(' ', $options),
-            ProcessUtils::escapeArgument($this->outputFile),
+            ProcessUtils::validateInput(self::class, $this->outputFile),
             $targets
         );
 
