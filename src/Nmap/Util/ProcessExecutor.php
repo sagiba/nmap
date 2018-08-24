@@ -19,11 +19,12 @@ class ProcessExecutor
 {
     /**
      * @param string $command The command to execute.
-     * @param int    $timeout The process timeout.
+     * @param int    $timeout The process timeout.,
+     * @param string $output  The output of the command, by reference.
      *
      * @return integer
      */
-    public function execute($command, $timeout = 60)
+    public function execute($command, $timeout = 60, &$output = '')
     {
         $process = new Process($command, null, null, null, $timeout);
         $process->run();
@@ -35,6 +36,8 @@ class ProcessExecutor
                 $process->getErrorOutput()
             ));
         }
+
+        $output = $process->getOutput();
 
         return $process->getExitCode();
     }

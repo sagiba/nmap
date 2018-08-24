@@ -57,7 +57,7 @@ class Nmap
     public function __construct(ProcessExecutor $executor = null, $outputFile = null, $executable = 'nmap')
     {
         $this->executor   = $executor ?: new ProcessExecutor();
-        $this->outputFile = $outputFile ?: tempnam(sys_get_temp_dir(), 'nmap-scan-output.xml');
+        $this->outputFile = $outputFile ?: '-';
         $this->executable = $executable;
 
         // If executor returns anything else than 0 (success exit code), throw an exeption since $executable is not executable.
@@ -114,13 +114,11 @@ class Nmap
             $targets
         );
 
-        $this->executor->execute($command, $this->timeout);
 
-        if (!file_exists($this->outputFile)) {
-            throw new \RuntimeException(sprintf('Output file not found ("%s")', $this->outputFile));
-        }
+        $processOutput = '';
+        $this->executor->execute($command, $this->timeout, $processOutput);
 
-        return $this->parseOutputFile($this->outputFile);
+        return $this->readAndParseOutput($this->outputFile, $processOutput);
     }
 
     /**
@@ -207,10 +205,23 @@ class Nmap
         return $this;
     }
 
-    private function parseOutputFile($xmlFile)
+    private function readAndParseOutput($outputFile, $processOutput)
     {
-        $xml = simplexml_load_file($xmlFile);
+        if ($outputFile === '-') {
+            $xml = simplexml_load_string($processOutput);
+        } else {
+            if (!file_exists($this->outputFile)) {
+                throw new \RuntimeException(sprintf('Output file not found ("%s")', $this->outputFile));
+            }
 
+            $xml = simplexml_load_file($outputFile);
+        }
+
+        return $this->parseOutput($xml);
+    }
+
+    private function parseOutput(\SimpleXMLElement $xml)
+    {
         $hosts = array();
         foreach ($xml->host as $host) {
             $hosts[] = new Host(
